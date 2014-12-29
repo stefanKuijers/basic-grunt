@@ -1,0 +1,23 @@
+{
+  "name": "basic-grunt",
+  "version": "0.0.0",
+  "description": "A basic grunt setup",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stefanKuijers/basic-grunt.git"
+  },
+  "keywords": [
+    "testing",
+    "grunt"
+  ],
+  "author": "sKuijers",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stefanKuijers/basic-grunt/issues"
+  },
+  "homepage": "https://github.com/stefanKuijers/basic-grunt"
+}
