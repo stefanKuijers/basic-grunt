@@ -1,14 +1,14 @@
+
 /**
     vendor/css/foundation.css
 */
-
 html {
     font-size: 1em;
 }
+
 /**
     src/css/default.css
 */
-
 body {
     background-color: rgba( 200, 200, 200, 0.3 );
 }

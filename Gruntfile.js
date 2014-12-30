@@ -25,16 +25,32 @@ module.exports = function( grunt ) {
                     css: 'app.css'
                 }
             }
+        },
+
+        watch: {
+            js: {
+                files: ['<%= concat.js.src %>'],
+                tasks: ['concat:js']
+            },
+            css: {
+                files: ['<%= concat.css.src %>'],
+                tasks: ['concat:css']
+            },
+            homepage: {
+                files: ['<%= homepage.template %>'],
+                tasks: ['homepage:dev']
+            }
         }
 
     });
 
     // loading tasks via npm
     grunt.loadNpmTasks("grunt-contrib-concat");
+    grunt.loadNpmTasks("grunt-contrib-watch");
 
     // loading custom tasks
     grunt.loadTasks("tasks");
 
     // setup the workflow
-    grunt.registerTask("default", ["concat", "homepage:dev"]);
+    grunt.registerTask("default", ["concat", "homepage:dev", "watch"]);
 };
