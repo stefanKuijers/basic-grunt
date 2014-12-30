@@ -12,3 +12,7 @@ html {
 body {
     background-color: rgba( 200, 200, 200, 0.3 );
 }
+
+h1, p {
+    margin-left: 20px;
+}

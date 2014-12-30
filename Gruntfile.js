@@ -34,11 +34,40 @@ module.exports = function( grunt ) {
             },
             css: {
                 files: ['<%= concat.css.src %>'],
-                tasks: ['concat:css']
+                tasks: ['concat:css'],
+                options: {
+                  livereload: '<%= connect.options.livereload %>'
+                }
             },
             homepage: {
                 files: ['<%= homepage.template %>'],
-                tasks: ['homepage:dev']
+                tasks: ['homepage:dev'],
+            },
+            livereload: {
+                options: {
+                    livereload: '<%= connect.options.livereload %>'
+                },
+                files: [
+                    '<%= concat.js.dest %>',
+                    '<%= concat.css.dest %>',
+                    '<%= homepage.dev.dest %>',
+                    'Gruntfile.js',
+                    'tasks/*.js'
+                ]
+            }
+        },
+
+        connect: {
+            options: {
+                port      : 9000,
+                base      : 'dev',
+                hostname  : 'localhost',
+                livereload: 9001
+            },
+            livereload: {
+                options: {
+                    open: true
+                }
             }
         }
 
@@ -47,10 +76,17 @@ module.exports = function( grunt ) {
     // loading tasks via npm
     grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks("grunt-contrib-connect");
+
 
     // loading custom tasks
     grunt.loadTasks("tasks");
 
     // setup the workflow
-    grunt.registerTask("default", ["concat", "homepage:dev", "watch"]);
+    grunt.registerTask("default", [
+        "concat", 
+        "homepage:dev", 
+        "connect", 
+        "watch"
+    ]);
 };

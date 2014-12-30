@@ -1,6 +1,6 @@
 module.exports = function( grunt ) {
 
-    var _ = grunt.util._; // lowdash (light version of underscore library)
+    var _ = grunt.util._; // lowdash (optimized version of underscore library)
 
     grunt.registerTask("homepage", "wrapper which sets up the final build stuff index.html", function( target ) {
         var context, source, targetConfig;

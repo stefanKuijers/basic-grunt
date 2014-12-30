@@ -1,13 +1,14 @@
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Example Grunt Workflow</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Example Grunt Workflow</title>
 
-    <link href="<%= css %>" rel="stylesheet">
-</head>
-<body>
-    
-</body>
-<script src="<%= js %>"></script>
+        <link href="<%= css %>" rel="stylesheet">
+    </head>
+    <body>
+        <h1>A title</h1>
+        <p>Paragraph with text</p>
+    </body>
+    <script src="<%= js %>"></script>
 
 </html>
