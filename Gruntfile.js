@@ -106,6 +106,24 @@ module.exports = function( grunt ) {
             }
         },
 
+        htmlmin: {
+            dist: {
+                options: {
+                    collapseWhitespace: true,
+                    conservativeCollapse: true,
+                    collapseBooleanAttributes: true,
+                    removeCommentsFromCDATA: true,
+                    removeOptionalTags: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'dist/',
+                    src: ['*.html'],
+                    dest: 'dist/'
+                }]
+            }
+        },
+
         connect: {
             options: {
                 port      : 9000,
