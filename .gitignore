@@ -1,2 +1,7 @@
+node_modules
+dist
+dev
+.sass-cache
+bower_components
 *.sublime-project
 *.settings
