@@ -28,20 +28,31 @@ module.exports = function( grunt ) {
             }
         },
 
-        // configure custom task
-        homepage: {
-            template: 'src/index.us',
-
-            dev:      {
-                dest:    'dev/index.html',
-                context: {
-                    js:  'app.js',
-                    css: 'app.css'
-                }
+        wiredep: {
+            dev: {
+                src: ['src/index.html'],
+                ignorePath:  /\.\.\//
             }
         },
 
+        // configure custom task
+        // homepage: {
+        //     template: 'src/index.us',
+
+        //     dev:      {
+        //         dest:    'dev/index.html',
+        //         context: {
+        //             js:  'app.js',
+        //             css: 'app.css'
+        //         }
+        //     }
+        // },
+
         watch: {
+            bower: {
+                files: ['bower.json'],
+                tasks: ['wiredep']
+            },
             js: {
                 files: ['<%= concat.js.src %>'],
                 tasks: ['concat:js']
@@ -53,9 +64,9 @@ module.exports = function( grunt ) {
                   livereload: '<%= connect.options.livereload %>'
                 }
             },
-            homepage: {
-                files: ['<%= homepage.template %>'],
-                tasks: ['homepage:dev'],
+            html: {
+                files: ['src/index.html'],
+                tasks: ['copy:dev'],
             },
             livereload: {
                 options: {
@@ -64,7 +75,7 @@ module.exports = function( grunt ) {
                 files: [
                     '<%= concat.js.dest %>',
                     '<%= concat.css.dest %>',
-                    '<%= homepage.dev.dest %>',
+                    'src/index.html',
                     'Gruntfile.js',
                     'tasks/*.js'
                 ]
@@ -139,10 +150,11 @@ module.exports = function( grunt ) {
         },
 
         copy: {
+            dev: {
+                files: [ {expand: true, cwd: 'src/', src: ['*.html'], dest: 'dev/'} ],
+            },
             dist: {
-                files: [
-                    {expand: true, cwd: 'dev/', src: ['*.html'], dest: 'dist/'}
-                ],
+                files: [ {expand: true, cwd: 'dev/', src: ['*.html'], dest: 'dist/'} ],
             },
         },
 
@@ -154,7 +166,7 @@ module.exports = function( grunt ) {
     });
 
     // loading custom tasks
-    grunt.loadTasks("tasks");
+    // grunt.loadTasks("tasks");
 
     // Task set for everyday workflow
     // runs the dev tasks, setup a server and watches for any files to change
@@ -175,7 +187,8 @@ module.exports = function( grunt ) {
         "clean:dev",        // clean out the dev/ folder
        // "sass it together",
         "concat",           // concatinate css and js to one file
-        "homepage:dev",     // run custom task
+        "copy:dev"
+        // "homepage:dev",     // run custom task
         // "karma:dev",     // do unit testing
     ]);
 
@@ -187,6 +200,7 @@ module.exports = function( grunt ) {
         "clean:dist",       // empties the dist folder
         "uglify",           // minifies js
         "cssmin",           // minifies css
+        "htmlmin:dist",     // minifies html
         "copy:dist"         // copies files from dev/ to dist/
     //     "karma:dist"     // runs unit tests to see or minification succeeded
     ]);

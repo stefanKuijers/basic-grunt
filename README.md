@@ -15,9 +15,9 @@ TODO
 Basic Example
 [X] - Setup watch
 [X] - Setup live reload
-[O] - One folder for the finished distribution
+[X] - One folder for the finished distribution
 [X] - Server from grunt dev
-[O] - Update the homepage task to work for all pages
+[X] - Auto inject bower dependencies
 [O] - Add bootstrap
 [O] - Add fontawesome
 [O] - setup minification for js and css
@@ -36,3 +36,6 @@ Thick frontend
 [O] - Run unit tests on tmp folder and on dist to see or minification is working
 [O] - Auto dependency Injection
 [O] - Auto Generation of files
+
+Maybe Later
+[O] - Update the homepage task to work for all pages

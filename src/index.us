@@ -4,12 +4,18 @@
         <meta charset="UTF-8">
         <title>Example Grunt Workflow</title>
 
+        <!-- bower:css -->
+        <!-- endbower -->
+
         <link href="<%= css %>" rel="stylesheet">
     </head>
     <body>
         <h1>A title</h1>
         <p>Paragraph with some text</p>
     </body>
+    <!-- bower:js -->
+    <!-- endbower -->
+
     <script src="<%= js %>"></script>
 
 </html>

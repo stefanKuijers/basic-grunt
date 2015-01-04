@@ -520,21 +520,21 @@
 	"buffers":
 	[
 		{
-			"contents": "module.exports = function( grunt ) {\n\n    // load tasks from installed plugins\n    require('load-grunt-tasks')(grunt);\n\n    var configVars = {\n        path: {\n            src:   'src',\n            dev:   'dev',\n            dist:  'dist',\n            bower: 'bower_components',\n            npm:   'node_modules'\n        },\n        pkg: grunt.file.readJSON(\"package.json\")\n    };\n    \n    grunt.initConfig({\n\n        // configuration of a task\n        concat: {\n            js:  {\n                src:  ['vendor/js/**/*.js', 'src/js/**/*.js'],\n                dest: 'dev/app.js'\n            },\n            css: {\n                src:  ['vendor/css/**/*.css', 'src/css/**/*.css'],\n                dest: 'dev/app.css'\n            }\n        },\n\n        // configure custom task\n        homepage: {\n            template: 'src/index.us',\n\n            dev:      {\n                dest:    'dev/index.html',\n                context: {\n                    js:  'app.js',\n                    css: 'app.css'\n                }\n            }\n        },\n\n        watch: {\n            js: {\n                files: ['<%= concat.js.src %>'],\n                tasks: ['concat:js']\n            },\n            css: {\n                files: ['<%= concat.css.src %>'],\n                tasks: ['concat:css'],\n                options: {\n                  livereload: '<%= connect.options.livereload %>'\n                }\n            },\n            homepage: {\n                files: ['<%= homepage.template %>'],\n                tasks: ['homepage:dev'],\n            },\n            livereload: {\n                options: {\n                    livereload: '<%= connect.options.livereload %>'\n                },\n                files: [\n                    '<%= concat.js.dest %>',\n                    '<%= concat.css.dest %>',\n                    '<%= homepage.dev.dest %>',\n                    'Gruntfile.js',\n                    'tasks/*.js'\n                ]\n            }\n        },\n\n        htmlhint: {\n            build: {\n                options: {\n                    'tag-pair'                : true,\n                    'tagname-lowercase'       : true,\n                    'attr-lowercase'          : true,\n                    'attr-value-double-quotes': true,\n                    'doctype-first'           : true,\n                    'spec-char-escape'        : true,\n                    'id-unique'               : true,\n                    'head-script-disabled'    : true,\n                    'style-disabled'          : true\n                },\n                src: ['dev/index.html']\n            }\n        },\n\n        uglify: {\n            build: {\n                files: {\n                    // note that we do not have to create the folder js\n                    // destination        source\n                    'dist/js/app.min.js': ['dev/app.js']\n                }\n            }\n        },\n\n        cssmin: {\n            target: {\n                files: {\n                    'dist/css/output.min.css': ['dev/app.css']\n                }\n            }\n        },\n\n        \n\n        connect: {\n            options: {\n                port      : 9000,\n                base      : 'dev',\n                hostname  : 'localhost',\n                livereload: 9001\n            },\n            livereload: {\n                options: {\n                    open: true\n                }\n            }\n        },\n\n        copy: {\n            dist: {\n                files: [\n                    {expand: true, cwd: 'dev/', src: ['*.html'], dest: 'dist/'}\n                ],\n            },\n        },\n\n        clean: {\n            dev  : [\"dev/\"],\n            dist : [\"dist/\"]\n        }\n\n    });\n\n    // loading custom tasks\n    grunt.loadTasks(\"tasks\");\n\n    // Task set for everyday workflow\n    // runs the dev tasks, setup a server and watches for any files to change\n    // To run task set:\n    // $ grunt\n    grunt.registerTask(\"default\", [\n        \"dev\",              // development workflow \n        \"connect\",          // start webserver. Serving from dev/\n        \"watch\"             // watch any files that might change\n    ]);\n\n    // Task set which will run often during development\n    // cleans the dev dir, compile sass to css, runs unit tests\n    // To run task set:\n    // $ grunt dev\n    grunt.registerTask(\"dev\", [\n       \n        \"clean:dev\",        // clean out the dev/ folder\n       // \"sass it together\",\n        \"concat\",           // concatinate css and js to one file\n        \"homepage:dev\",     // run custom task\n        // \"karma:dev\",     // do unit testing\n    ]);\n\n    // Task set to get app ready for production\n    // To run task set:\n    // $ grunt dist\n    grunt.registerTask(\"dist\", [\n        \"dev\",              // runs dev task set\n        \"clean:dist\",       // empties the dist folder\n        \"uglify\",           // minifies js\n        \"cssmin\",           // minifies css\n        \"copy:dist\"         // copies files from dev/ to dist/\n    //     \"karma:dist\"     // runs unit tests to see or minification succeeded\n    ]);\n};",
+			"contents": "module.exports = function( grunt ) {\n\n    // load tasks from installed plugins\n    require('load-grunt-tasks')(grunt);\n\n    var configVars = {\n        path: {\n            src:   'src',\n            dev:   'dev',\n            dist:  'dist',\n            bower: 'bower_components',\n            npm:   'node_modules'\n        },\n        pkg: grunt.file.readJSON(\"package.json\")\n    };\n    \n    grunt.initConfig({\n\n        // configuration of a task\n        concat: {\n            js:  {\n                src:  ['vendor/js/**/*.js', 'src/js/**/*.js'],\n                dest: 'dev/app.js'\n            },\n            css: {\n                src:  ['vendor/css/**/*.css', 'src/css/**/*.css'],\n                dest: 'dev/app.css'\n            }\n        },\n\n        wiredep: {\n\n            task: {\n\n                // Point to the files that should be updated when\n                // you run `grunt wiredep`\n                src: [\n                  'src/*.html',   // .html support...\n                  // 'app/views/**/*.jade',   // .jade support...\n                  // 'app/styles/main.scss',  // .scss & .sass support...\n                  // 'app/config.yml'         // and .yml & .yaml support out of the box!\n                ],\n\n                options: {\n                  // See wiredep's configuration documentation for the options\n                  // you may pass:\n\n                  // https://github.com/taptapship/wiredep#configuration\n                }\n            }\n        },\n\n        // configure custom task\n        // homepage: {\n        //     template: 'src/index.us',\n\n        //     dev:      {\n        //         dest:    'dev/index.html',\n        //         context: {\n        //             js:  'app.js',\n        //             css: 'app.css'\n        //         }\n        //     }\n        // },\n\n        watch: {\n            bower: {\n                files: ['bower.json'],\n                tasks: ['wiredep']\n            },\n            js: {\n                files: ['<%= concat.js.src %>'],\n                tasks: ['concat:js']\n            },\n            css: {\n                files: ['<%= concat.css.src %>'],\n                tasks: ['concat:css'],\n                options: {\n                  livereload: '<%= connect.options.livereload %>'\n                }\n            },\n            // homepage: {\n            //     files: ['<%= homepage.template %>'],\n            //     tasks: ['homepage:dev'],\n            // },\n            livereload: {\n                options: {\n                    livereload: '<%= connect.options.livereload %>'\n                },\n                files: [\n                    '<%= concat.js.dest %>',\n                    '<%= concat.css.dest %>',\n                    // '<%= homepage.dev.dest %>',\n                    'Gruntfile.js',\n                    'tasks/*.js'\n                ]\n            }\n        },\n\n        htmlhint: {\n            build: {\n                options: {\n                    'tag-pair'                : true,\n                    'tagname-lowercase'       : true,\n                    'attr-lowercase'          : true,\n                    'attr-value-double-quotes': true,\n                    'doctype-first'           : true,\n                    'spec-char-escape'        : true,\n                    'id-unique'               : true,\n                    'head-script-disabled'    : true,\n                    'style-disabled'          : true\n                },\n                src: ['dev/index.html']\n            }\n        },\n\n        uglify: {\n            build: {\n                files: {\n                    // note that we do not have to create the folder js\n                    // destination        source\n                    'dist/js/app.min.js': ['dev/app.js']\n                }\n            }\n        },\n\n        cssmin: {\n            target: {\n                files: {\n                    'dist/css/output.min.css': ['dev/app.css']\n                }\n            }\n        },\n\n        htmlmin: {\n            dist: {\n                options: {\n                    collapseWhitespace: true,\n                    conservativeCollapse: true,\n                    collapseBooleanAttributes: true,\n                    removeCommentsFromCDATA: true,\n                    removeOptionalTags: true\n                },\n                files: [{\n                    expand: true,\n                    cwd: 'dist/',\n                    src: ['*.html'],\n                    dest: 'dist/'\n                }]\n            }\n        },\n\n        connect: {\n            options: {\n                port      : 9000,\n                base      : 'dev',\n                hostname  : 'localhost',\n                livereload: 9001\n            },\n            livereload: {\n                options: {\n                    open: true\n                }\n            }\n        },\n\n        copy: {\n            dev: {\n                files: [ {expand: true, cwd: 'src/', src: ['*.html'], dest: 'dev/'} ],\n            },\n            dist: {\n                files: [ {expand: true, cwd: 'dev/', src: ['*.html'], dest: 'dist/'} ],\n            },\n        },\n\n        clean: {\n            dev  : [\"dev/\"],\n            dist : [\"dist/\"]\n        }\n\n    });\n\n    // loading custom tasks\n    // grunt.loadTasks(\"tasks\");\n\n    // Task set for everyday workflow\n    // runs the dev tasks, setup a server and watches for any files to change\n    // To run task set:\n    // $ grunt\n    grunt.registerTask(\"default\", [\n        \"dev\",              // development workflow \n        \"connect\",          // start webserver. Serving from dev/\n        \"watch\"             // watch any files that might change\n    ]);\n\n    // Task set which will run often during development\n    // cleans the dev dir, compile sass to css, runs unit tests\n    // To run task set:\n    // $ grunt dev\n    grunt.registerTask(\"dev\", [\n       \n        \"clean:dev\",        // clean out the dev/ folder\n       // \"sass it together\",\n        \"concat\",           // concatinate css and js to one file\n        \"copy:dev\"\n        // \"homepage:dev\",     // run custom task\n        // \"karma:dev\",     // do unit testing\n    ]);\n\n    // Task set to get app ready for production\n    // To run task set:\n    // $ grunt dist\n    grunt.registerTask(\"dist\", [\n        \"dev\",              // runs dev task set\n        \"clean:dist\",       // empties the dist folder\n        \"uglify\",           // minifies js\n        \"cssmin\",           // minifies css\n        \"htmlmin:dist\",     // minifies html\n        \"copy:dist\"         // copies files from dev/ to dist/\n    //     \"karma:dist\"     // runs unit tests to see or minification succeeded\n    ]);\n};",
 			"file": "Gruntfile.js",
-			"file_size": 5211,
-			"file_write_time": 130648430359434156,
+			"file_size": 6728,
+			"file_write_time": 130648451887792655,
 			"settings":
 			{
-				"buffer_size": 5047,
+				"buffer_size": 6621,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "dist/css/output.min.css",
+			"file": "dist/index.html",
 			"settings":
 			{
-				"buffer_size": 84,
+				"buffer_size": 216,
 				"line_ending": "Windows"
 			}
 		},
@@ -542,7 +542,15 @@
 			"file": "dev/index.html",
 			"settings":
 			{
-				"buffer_size": 302,
+				"buffer_size": 401,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "dev/app.js",
+			"settings":
+			{
+				"buffer_size": 62,
 				"line_ending": "Windows"
 			}
 		},
@@ -550,7 +558,7 @@
 			"file": "package.json",
 			"settings":
 			{
-				"buffer_size": 1082,
+				"buffer_size": 1056,
 				"line_ending": "Unix"
 			}
 		},
@@ -593,7 +601,15 @@
 			"file": "src/index.us",
 			"settings":
 			{
-				"buffer_size": 308,
+				"buffer_size": 407,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/index.html",
+			"settings":
+			{
+				"buffer_size": 401,
 				"line_ending": "Windows"
 			}
 		},
@@ -943,12 +959,13 @@
 	[
 		"/C/dev/basic-grunt",
 		"/C/dev/basic-grunt/dev",
-		"/C/dev/basic-grunt/dist",
 		"/C/dev/basic-grunt/src",
 		"/C/dev/basic-grunt/src/css"
 	],
 	"file_history":
 	[
+		"/C/dev/basic-grunt/dist/css/output.min.css",
+		"/C/dev/basic-grunt/dist/index.html",
 		"/C/dev/basic-grunt/node_modules/css-condense/extras/github.css",
 		"/C/dev/basic-grunt/node_modules/grunt-contrib-cssmin/node_modules/maxmin/node_modules/gzip-size/node_modules/browserify-zlib/test/test-zlib-invalid-input.js",
 		"/C/dev/basic-grunt/basic-grunt",
@@ -1074,9 +1091,7 @@
 		"/C/dev/vv/vv.sublime-project",
 		"/C/dev/vv/ftpsync.settings",
 		"/C/dev/vv/composer.lock",
-		"/C/dev/vv/composer.json",
-		"/C/dev/vv/api.php",
-		"/C/dev/vv/vendor/symfony/console/Symfony/Component/Console/Output/ConsoleOutput.php"
+		"/C/dev/vv/composer.json"
 	],
 	"find":
 	{
@@ -1118,6 +1133,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"homepage",
 			"// ",
 			":",
 			"console.",
@@ -1244,8 +1260,7 @@
 			"handleQuestionChange",
 			"<a class=\"tooltip",
 			"$.cb.filterQuestionData",
-			"getChart",
-			"js-questions-select2"
+			"getChart"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1272,15 +1287,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5047,
+						"buffer_size": 6621,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3064,
-								3064
+								1449,
+								1449
 							]
 						],
 						"settings":
@@ -1288,7 +1303,7 @@
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1559.0,
+						"translation.y": 536.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -1296,26 +1311,26 @@
 				},
 				{
 					"buffer": 1,
-					"file": "dist/css/output.min.css",
+					"file": "dist/index.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 84,
+						"buffer_size": 216,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								84,
-								84
+								216,
+								216
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/CSS/CSS.tmLanguage"
+							"syntax": "Packages/HTML/HTML.tmLanguage"
 						},
-						"translation.x": 0.0,
+						"translation.x": 800.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
@@ -1328,15 +1343,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 302,
+						"buffer_size": 401,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								302,
-								302
+								392,
+								392
 							]
 						],
 						"settings":
@@ -1347,24 +1362,52 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "package.json",
-					"semi_transient": false,
+					"file": "dev/app.js",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 1082,
+						"buffer_size": 62,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								496,
-								496
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "package.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1056,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								723,
+								723
 							]
 						],
 						"settings":
@@ -1375,11 +1418,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 5,
 					"file": "tasks/homepage.js",
 					"semi_transient": false,
 					"settings":
@@ -1403,11 +1446,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
 					"file": "dev/app.css",
 					"semi_transient": false,
 					"settings":
@@ -1431,11 +1474,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 7,
 					"file": "README.md",
 					"semi_transient": false,
 					"settings":
@@ -1447,8 +1490,8 @@
 						"selection":
 						[
 							[
-								288,
-								288
+								811,
+								811
 							]
 						],
 						"settings":
@@ -1459,11 +1502,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 8,
 					"file": ".gitignore",
 					"semi_transient": false,
 					"settings":
@@ -1487,24 +1530,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 9,
 					"file": "src/index.us",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 308,
+						"buffer_size": 407,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								308,
-								308
+								0,
+								407
 							]
 						],
 						"settings":
@@ -1515,11 +1558,40 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 10,
+					"file": "src/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 401,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								356,
+								356
+							]
+						],
+						"settings":
+						{
+							"open_with_edit": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
 					"file": "src/css/default.css",
 					"semi_transient": false,
 					"settings":
@@ -1543,7 +1615,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 10,
 					"type": "text"
 				}
 			]
@@ -1600,20 +1672,28 @@
 		"selected_items":
 		[
 			[
-				"gr",
+				"",
 				"Gruntfile.js"
 			],
 			[
-				"gitigno",
-				".gitignore"
+				"pack",
+				"package.json"
 			],
 			[
 				"read",
 				"README.md"
 			],
 			[
-				"",
+				"grunt",
 				"Gruntfile.js"
+			],
+			[
+				"gr",
+				"Gruntfile.js"
+			],
+			[
+				"gitigno",
+				".gitignore"
 			],
 			[
 				"red",
