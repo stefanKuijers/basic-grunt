@@ -1,6 +1,6 @@
 {
   "name": "basic-grunt",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A basic grunt setup",
   "main": "index.js",
   "scripts": {
@@ -20,12 +20,19 @@
     "url": "https://github.com/stefanKuijers/basic-grunt/issues"
   },
   "homepage": "https://github.com/stefanKuijers/basic-grunt",
-  "dependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-concat": "^0.5.0",
-    "grunt-contrib-watch": "^0.6.1"
-  },
   "devDependencies": {
-    "grunt-contrib-connect": "^0.9.0"
+    "grunt": "^0.4.5",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-contrib-connect": "^0.9.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "load-grunt-tasks": "^2.0.0",
+    "grunt-htmlhint": "^0.4.1",
+    "grunt-contrib-uglify": "^0.7.0",
+    "grunt-contrib-sass": "^0.8.1",
+    "css-condense": "0.0.6",
+    "grunt-cssc": "^0.2.6",
+    "grunt-contrib-cssmin": "^0.11.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-clean": "^0.6.0"
   }
 }
