@@ -1,0 +1,10 @@
+// app.scss
+// file is the aggregator which grabs all the scss files together concatenates them
+
+// import variables
+@import 'variables';
+
+// import base.scss which will handle default styles
+@import 'base';
+
+// page or component specific styles should be imported after this

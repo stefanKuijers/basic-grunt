@@ -21,11 +21,11 @@ module.exports = function( grunt ) {
             js:  {
                 src:  ['vendor/js/**/*.js', 'src/js/**/*.js'],
                 dest: 'dev/app.js'
-            },
-            css: {
-                src:  ['vendor/css/**/*.css', 'src/css/**/*.css'],
-                dest: 'dev/app.css'
             }
+            // css: {
+            //     src:  ['vendor/css/**/*.css', 'src/css/**/*.css'],
+            //     dest: 'dev/app.css'
+            // }
         },
 
         wiredep: {
@@ -38,6 +38,17 @@ module.exports = function( grunt ) {
         removelogging: {
             dist: {
                 src: "dev/**/*.js" // Each file will be overwritten with the output!
+            }
+        },
+
+        sass: {                              
+            dev: {                          
+                options: {                   
+                    style: 'expanded'
+                },
+                files: {                         
+                    'dev/app.css': 'src/sass/app.scss',       
+                }
             }
         },
 
@@ -63,9 +74,16 @@ module.exports = function( grunt ) {
                 files: ['<%= concat.js.src %>'],
                 tasks: ['concat:js']
             },
-            css: {
-                files: ['<%= concat.css.src %>'],
-                tasks: ['concat:css'],
+            // css: {
+            //     files: ['<%= concat.css.src %>'],
+            //     tasks: ['concat:css'],
+            //     options: {
+            //       livereload: '<%= connect.options.livereload %>'
+            //     }
+            // },
+            sass: {
+                files: ['src/sass/**/*.scss'],
+                tasks: ['sass:dev'],
                 options: {
                   livereload: '<%= connect.options.livereload %>'
                 }
@@ -80,7 +98,8 @@ module.exports = function( grunt ) {
                 },
                 files: [
                     '<%= concat.js.dest %>',
-                    '<%= concat.css.dest %>',
+                    // '<%= concat.css.dest %>',
+                    'src/sass/**/*.scss',
                     'src/index.html',
                     'Gruntfile.js',
                     'tasks/*.js'
@@ -185,14 +204,14 @@ module.exports = function( grunt ) {
     ]);
 
     // Task set which will run often during development
-    // cleans the dev dir, compile sass to css, runs unit tests
+    // cleans the dev dir, compiles sass to css, runs unit tests
     // To run task set:
     // $ grunt dev
     grunt.registerTask("dev", [
        
         "clean:dev",        // clean out the dev/ folder
-       // "sass it together",
-        "concat",           // concatinate css and js to one file
+        "sass:dev",         // compile sass to css,
+        "concat",           // concatinate js to one file. guess it belongs in 
         "copy:dev"
         // "karma:dev",     // do unit testing
     ]);

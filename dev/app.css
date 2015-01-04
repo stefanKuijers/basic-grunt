@@ -1,18 +1,12 @@
-
 /**
-    vendor/css/foundation.css
-*/
-html {
-    font-size: 1em;
-}
-
-/**
-    src/css/default.css
+    _base.scss
 */
 body {
-    background-color: rgba( 200, 200, 200, 0.3 );
+  background-color: rgba(200, 200, 200, 0.3);
 }
 
 h1, p {
-    margin-left: 20px;
+  margin-left: 20px;
 }
+
+/*# sourceMappingURL=app.css.map */

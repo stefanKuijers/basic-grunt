@@ -23,7 +23,9 @@ Basic Example
 [X] - setup minification for js and css
 [X] - Add dev folder to run server from. dev will hold non concatenated and un minified files. Dist should have the min
 [X] - add html hint
-[O] - use grunt-remove-logging to remove console.log
+[X] - use grunt-remove-logging to remove console.log
+[X] - setup sass & compass (.cssc) and add to basic workflow to compile
+[O] - move all vars in gruntfile to a global config
 [O] - keep this as an example repo and fork to a thin frontend and a thick frontend
 
 Thin Frontend

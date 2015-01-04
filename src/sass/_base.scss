@@ -1,0 +1,11 @@
+/**
+    _base.scss
+*/
+
+body {
+    background-color: $backgroundColor;
+}
+
+h1, p {
+    margin-left: $basicPadding;
+}
