@@ -35,6 +35,12 @@ module.exports = function( grunt ) {
             }
         },
 
+        removelogging: {
+            dist: {
+                src: "dev/**/*.js" // Each file will be overwritten with the output!
+            }
+        },
+
         // configure custom task
         // homepage: {
         //     template: 'src/index.us',
@@ -188,7 +194,6 @@ module.exports = function( grunt ) {
        // "sass it together",
         "concat",           // concatinate css and js to one file
         "copy:dev"
-        // "homepage:dev",     // run custom task
         // "karma:dev",     // do unit testing
     ]);
 
@@ -196,12 +201,13 @@ module.exports = function( grunt ) {
     // To run task set:
     // $ grunt dist
     grunt.registerTask("dist", [
-        "dev",              // runs dev task set
-        "clean:dist",       // empties the dist folder
-        "uglify",           // minifies js
-        "cssmin",           // minifies css
-        "htmlmin:dist",     // minifies html
-        "copy:dist"         // copies files from dev/ to dist/
-    //     "karma:dist"     // runs unit tests to see or minification succeeded
+        "dev",                // runs dev task set
+        "removelogging:dist", // removes any console logs
+        "clean:dist",         // empties the dist folder
+        "uglify",             // minifies js
+        "cssmin",             // minifies css
+        "htmlmin:dist",       // minifies html
+        "copy:dist"           // copies files from dev/ to dist/
+    //     "karma:dist"       // runs unit tests to see or minification succeeded
     ]);
 };

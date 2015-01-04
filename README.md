@@ -18,13 +18,13 @@ Basic Example
 [X] - One folder for the finished distribution
 [X] - Server from grunt dev
 [X] - Auto inject bower dependencies
-[O] - Add bootstrap
-[O] - Add fontawesome
-[O] - setup minification for js and css
-[O] - Add tmp folder to run server from. tmp will hold non concatenated and un minified files. Dist should have the min
-[O] - keep this as an example repo and fork to a thin frontend and a thick frontend
+[X] - Add bootstrap
+[X] - Add fontawesome
+[X] - setup minification for js and css
+[X] - Add dev folder to run server from. dev will hold non concatenated and un minified files. Dist should have the min
+[X] - add html hint
 [O] - use grunt-remove-logging to remove console.log
-[O] - add html hint
+[O] - keep this as an example repo and fork to a thin frontend and a thick frontend
 
 Thin Frontend
 [O] - One workflow for thin frontend
